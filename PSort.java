@@ -40,7 +40,11 @@ extends Reducer<IntWritable, NullWritable, String, NullWritable> implements Conf
     PSORT_TIME
   };
 
-  public native void do_sort(String dna_file, String suffix_file, String output_file, int numIndices, int partition);
+  public native void do_sort(String dna_file,
+      String suffix_file,
+      String output_file,
+      int numIndices,
+      int partition);
   /* Use static intializer */
   static {
     System.loadLibrary("psort");

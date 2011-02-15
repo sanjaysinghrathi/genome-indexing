@@ -20,8 +20,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
 /**
- * Reads a file containing <suffix index> records and outputs 
- * prefix as key and the index value.
+ * Reads a file containing range of indices and outputs them.
  */
 public class BucketSortMapper
 	extends Mapper<Object, Text, IntWritable, NullWritable> implements Configurable {
@@ -50,6 +49,7 @@ public class BucketSortMapper
 		return conf;
 	}
 
+  // function that cleanes up tmp files from previous runs.
   private void cleanupTempFiles() {
     File tmpDir = new File("/tmp/");
     String[] fileList = tmpDir.list(new FilenameFilter() {

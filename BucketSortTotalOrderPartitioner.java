@@ -20,7 +20,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Partitioner;
 
 /*
- * Partitions the key space uniformly (assumes acgt as alphabets)
+ * Partitions the key space according to the sample points.
  */
 public class BucketSortTotalOrderPartitioner<V extends Writable> extends Partitioner<IntWritable, V> implements Configurable {
   private Configuration conf;
@@ -134,7 +134,7 @@ public class BucketSortTotalOrderPartitioner<V extends Writable> extends Partiti
     } else {
       return 0;
     }
-    for (int i = startIdx; i < splitPoints.size(); ++i) {//Sample splitPoint : splitPoints) {
+    for (int i = startIdx; i < splitPoints.size(); ++i) {
       if (compareWithSample(index, splitPoints.get(i)) <= 0)
         break;
       ++partition;

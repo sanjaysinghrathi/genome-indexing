@@ -21,11 +21,10 @@ public class SimpleBucketSorter {
   
   public static Job runBucketSortMapReduce(Path inputPath, Path outputPath,
                                         int reducerTasks, String dna_filepath,
-                                        int prefix_size, String psort_path,
-                                        String partitionPath, String genomeName)
+                                        String psort_path, String partitionPath,
+                                        String genomeName)
     throws Exception {
     Configuration conf = new Configuration();
-    conf.setInt("prefix.size", prefix_size);
     DistributedCache.createSymlink(conf);
     DistributedCache.addCacheFile(new URI(psort_path), conf);
     DistributedCache.addCacheFile(new URI(dna_filepath), conf);
@@ -64,20 +63,19 @@ public class SimpleBucketSorter {
 
   public static void main(String[] args) throws Exception {
     String[] otherArgs = new GenericOptionsParser(args).getRemainingArgs();
-    if (otherArgs.length != 8) {
-      System.err.println("Usage: SimpleBucketSort <in> <out> <reducers> <dna_filename> <prefix-size> <psort-path> <partition-file>");
+    if (otherArgs.length != 7) {
+      System.err.println("Usage: SimpleBucketSort <in> <out> <reducers> <dna_filename> <psort-path> <partition-file>");
       System.err.println("Typical psort-path: 'hdfs://localhost:9000/libraries/libpsort.so#libpsort.so'");
       System.exit(2);
     }
     
     int reducerTasks = Integer.parseInt(otherArgs[2]);
-    int prefix_size = Integer.parseInt(otherArgs[4]);
     String partitionFile = null;
-    if (otherArgs[6].compareToIgnoreCase("null") != 0) {  // if passed string is "null"
-    	partitionFile = otherArgs[6];
+    if (otherArgs[5].compareToIgnoreCase("null") != 0) {  // if passed string is "null"
+    	partitionFile = otherArgs[5];
     }
     Job job = runBucketSortMapReduce(new Path(otherArgs[0]), new Path(otherArgs[1]), reducerTasks,
-    		otherArgs[3], prefix_size, otherArgs[5], partitionFile, otherArgs[7]);
+    		otherArgs[3], otherArgs[4], partitionFile, otherArgs[6]);
     
     System.exit(0);
   }

@@ -174,7 +174,6 @@ void do_sort(char *input, unsigned int &input_size,
     const unsigned int &start, const unsigned int &end,
     const bool &do_recurse) {
 
-  //cout << "start: " << start << ", end:" << end << ", indices[start]: " << indices[start] << ", indices[end]: " << indices[end] << endl;
   static unsigned int count = 0;
   if (count % 10000 == 0) {
     cerr << ((double)start/sz)*100 << "\t\r";
@@ -270,6 +269,7 @@ void call_sort(const std::string &dna_file, const std::string &suffix_file,
   unsigned int input_size = 0;
   struct stat sbuf;
 
+  // Put the input string to a shared memory location.
   if ((fd = open(dna_file.c_str(), O_RDONLY)) == -1) {
     cerr << "Error opening: " << dna_file << endl;
     return;
@@ -289,6 +289,7 @@ void call_sort(const std::string &dna_file, const std::string &suffix_file,
 
   repeats = new repeats_t();
   rank_cache = new rank_t();
+
   // Read indices
   unsigned int *indices = NULL;
   unsigned int sz = 0;
