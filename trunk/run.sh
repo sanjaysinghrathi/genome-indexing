@@ -34,4 +34,4 @@ hadoop fs -rm "$HPATH/dc3_data/partition"
 ./sampler $FILE $REDUCERS > partition
 hadoop fs -copyFromLocal partition "$HPATH/dc3_data/partition"
 
-time hadoop jar SimpleBucketSorter.jar bucket_sort.SimpleBucketSorter "hdfs://${HDFS_ADDR}${HPATH}/dc3_data/seq.txt" $HPATH/bsout $REDUCERS "hdfs://${HDFS_ADDR}${HPATH}/dc3_data/dna_filename#dna_filename" 15 "hdfs://${HDFS_ADDR}${HPATH}/libraries/libpsort.so#libpsort.so" "$HPATH/dc3_data/partition" $BASENAME
+time hadoop jar SimpleBucketSorter.jar bucket_sort.SimpleBucketSorter "hdfs://${HDFS_ADDR}${HPATH}/dc3_data/seq.txt" $HPATH/bsout $REDUCERS "hdfs://${HDFS_ADDR}${HPATH}/dc3_data/dna_filename#dna_filename" "hdfs://${HDFS_ADDR}${HPATH}/libraries/libpsort.so#libpsort.so" "$HPATH/dc3_data/partition" $BASENAME
